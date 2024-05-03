@@ -1,0 +1,21 @@
+version: '3'
+services:
+  rabbitmq:
+    image: 'rabbitmq:3-management'
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
+  fastify:
+    build: ./fastify
+    ports:
+      - '3000:3000'
+    depends_on:
+      - rabbitmq
+
+  react:
+    build: ./react
+    ports:
+      - '8000:8000'
+    depends_on:
+      - fastify

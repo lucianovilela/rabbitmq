@@ -1,0 +1,19 @@
+{
+  "name": "rabbitmq",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+
+    "serve": "docker compose up rabbitmq -d &&  node index.js",
+    "start": "cd view && npm run build && cd .. && node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/static": "^7.0.3",
+    "amqplib": "^0.10.4",
+    "fastify": "^4.26.2"
+  }
+}
