@@ -8,9 +8,9 @@ const staticServe = require('@fastify/static');
 const staticPath = path.join(__dirname, '/view/build')
 
 fastify.register(staticServe, {
-    root: staticPath,
-    prefix: '/', // opcional: definir um prefixo para as rotas estáticas
-  })
+  root: staticPath,
+  prefix: '/', // opcional: definir um prefixo para as rotas estáticas
+})
 
 
 // Conecta ao RabbitMQ e cria um canal
@@ -31,6 +31,7 @@ amqp.connect('amqp://localhost', (err, conn) => {
 
 // Rota para gravar mensagens na fila
 fastify.post('/message', async (request, reply) => {
+  console.log(request.body)
   const message = request.body.message;
 
   channel.sendToQueue('my_queue', Buffer.from(message));
@@ -51,7 +52,7 @@ fastify.get('/message', async (request, reply) => {
 });
 
 // Inicia o servidor
-fastify.listen(3000, (err, address) => {
+fastify.listen({ port: 3000 }, (err, address) => {
   if (err) {
     fastify.log.error(err)
     process.exit(1)
